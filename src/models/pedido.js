@@ -1,6 +1,5 @@
 'use strict';
 
-const { mongo } = require('mongoose');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -15,7 +14,7 @@ const schema = new Schema({
             ref: 'produto'
         },
         descricao: {
-            type: mongoose.Schema.Types.descricao,
+            type: String,
             ref: 'produto'
         },
         quantidade: {
@@ -23,10 +22,10 @@ const schema = new Schema({
             required: true
         },
         preco: {
-            type: Number, // verificar
+            type: Number,
             required: true
         }
     }]
 });
 
-module.exports = mongoose.model('produto', schema);
+module.exports = mongoose.model('pedido', schema);

@@ -6,7 +6,11 @@ const mongoose = require('mongoose');
 
 const app = express();
 
-mongoose.connect('mongodb+srv://miguelbeckers:ReSQSPag7k8VjQCB@ndstr.exesl.mongodb.net/node-store?retryWrites=true&w=majority');
+mongoose.connect('mongodb+srv://miguelbeckers:ReSQSPag7k8VjQCB@ndstr.exesl.mongodb.net/backend-test?retryWrites=true&w=majority');
+
+const Produto = require('./models/produto');
+const Cliente = require('./models/cliente');
+const Pedido = require('./models/pedido');
 
 const index = require('./routes/index-route');
 const produto = require('./routes/produto-route');

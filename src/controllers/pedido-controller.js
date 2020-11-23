@@ -1,5 +1,8 @@
 'use strict'
 
+const mongoose = require('mongoose');
+const pedido = mongoose.model('pedido');
+
 exports.post = (req, res, next) => {
     res.status(201).send(req.body);
 };
