@@ -2,8 +2,11 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const app = express();
+
+mongoose.connect('mongodb+srv://miguelbeckers:ReSQSPag7k8VjQCB@ndstr.exesl.mongodb.net/node-store?retryWrites=true&w=majority');
 
 const index = require('./routes/index-route');
 const produto = require('./routes/produto-route');
