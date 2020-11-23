@@ -3,6 +3,18 @@
 const mongoose = require('mongoose');
 const Cliente = mongoose.model('cliente');
 
+exports.get = (req, res, next) => {
+    Cliente
+        .find({})
+        .then(data => {
+            res.status(200).send(data);
+        })
+        .catch(e => {
+            console.log(e);
+            res.status(400).send(e);
+        });
+};
+
 exports.post = (req, res, next) => {
     let cliente = new Cliente(req.body);
     cliente
@@ -13,7 +25,6 @@ exports.post = (req, res, next) => {
         .catch(e => {
             res.status(400).send({ message: 'Falha ao cadastrar o cliente', data: e});
         });
-    res.status(201).send(req.body);
 };
 
 exports.put = (req, res, next) => {
