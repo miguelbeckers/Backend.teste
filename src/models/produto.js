@@ -4,15 +4,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    nome: {
+    descricao: {
         type: String,
         required: true,
         trim: true
     },
-    dataNascimento: {
-        type: String,
+    preco: {
+        type: Number,
         required: true,
-        trim: true
     }
 });
 
