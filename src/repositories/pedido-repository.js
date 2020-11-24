@@ -17,10 +17,8 @@ exports.update = async(id, data) => {
     await Pedido
         .findByIdAndUpdate(id, {
             $set: {
-                produto: data.produto.id,
-                descricao: data.descricao,
-                quantidade: data.quantidade,
-                preco: data.preco
+                cliente: req.body.cliente,
+                produtos: req.body.produtos
             }
         });
 }

@@ -26,8 +26,12 @@ const schema = new Schema({
         preco: {
             type: Number,
             required: true
-        }
-    }]
+        }   
+    }],
+    dataCadastro: {
+        type: Date,
+        required: true
+    }   
 });
 
 module.exports = mongoose.model('pedido', schema);
