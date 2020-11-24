@@ -20,20 +20,28 @@ exports.post = (req, res, next) => {
     cliente
         .save()
         .then(x => {
-            res.status(201).send({ message: 'Cliente cadastrado com sucesso!'});
+            res.status(201).send({ message: 'Cliente cadastrado com sucesso!' });
         })
         .catch(e => {
-            res.status(400).send({ message: 'Falha ao cadastrar o cliente', data: e});
+            res.status(400).send({ message: 'Falha ao cadastrar o cliente', data: e });
         });
 };
 
 exports.put = (req, res, next) => {
-    const id = req.params.id;
-    res.status(200).send({
-        id: id,
-        item: req.body
-    });
-}
+    Cliente
+        .findByIdAndUpdate(req.params.id, {
+            $set: {
+                nome: req.body.nome,
+                dataNascimento: req.body.dataNascimento
+            }
+        })
+        .then(data => {
+            res.status(200).send({ message: 'Cliente atualizado com sucesso!' });
+        })
+        .catch(e => {
+            res.status(400).send({ message: 'Falha ao atualizar o cliente', data: e });
+        });
+};
 
 exports.delete = (req, res, next) => {
     res.status(200).send(req.body);

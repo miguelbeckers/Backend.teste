@@ -6,16 +6,18 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     cliente: {
         type: mongoose.Schema.Types.ObjectID,
-        ref: 'cliente'
+        ref: 'cliente',
+        required: true
     },
     produtos: [{
         produto: {
             type: mongoose.Schema.Types.ObjectID,
-            ref: 'produto'
+            ref: 'produto',
+            required: true
         },
         descricao: {
             type: String,
-            ref: 'produto'
+            required: true
         },
         quantidade: {
             type: Number,

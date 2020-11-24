@@ -10,7 +10,7 @@ const schema = new Schema({
         trim: true
     },
     dataNascimento: {
-        type: String,
+        type: Date,
         required: true,
         trim: true
     }
