@@ -30,7 +30,6 @@ const schema = new Schema({
     }],
     dataCadastro: {
         type: Date,
-        required: true
     }   
 });
 

@@ -1,7 +1,7 @@
 'use strict'
 
 const ValidationContract = require('../validators/fluent-validator');
-const repository = require('../repositories/produto-repository');
+const repository = require('../repositories/pedido-repository');
 
 exports.get = async(req, res, next) => {
     try{
@@ -16,13 +16,11 @@ exports.get = async(req, res, next) => {
 };
 
 exports.post = async(req, res, next) => {
+    
     let contract =  new ValidationContract();
     
     contract.isRequired(req.body.cliente, 'O cliente é obrigatorio');
-    contract.isRequired(req.body.produto, 'O produto é obrigatorio');
-    contract.hasMinLen(req.body.descricao, 3, 'A descricao deve conter pelo menos 3 caracteres');
-    contract.isRequired(req.body.quantidade, 'A quantidade é obrigatoria');
-    contract.isRequired(req.body.preco, 'O preco é obrigatorio');
+    contract.isRequired(req.body.produtos, 'É obrigatorio ter um produto');
 
     if(!contract.isValid()){
         res.status(400).send(contract.errors()).end();

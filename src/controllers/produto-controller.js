@@ -18,7 +18,7 @@ exports.get = async(req, res, next) => {
 exports.post = async(req, res, next) => {
     let contract =  new ValidationContract();
     contract.hasMinLen(req.body.descricao, 3, 'A descricao deve conter pelo menos 3 caracteres');
-    contract.hasMinLen(req.body.preco, 1, 'O preco deve conter pelo menos 1 caracteres');
+    contract.isRequired(req.body.preco, 'O preço é obrigatorio');
 
     if(!contract.isValid()){
         res.status(400).send(contract.errors()).end();

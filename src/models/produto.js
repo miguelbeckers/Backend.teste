@@ -4,12 +4,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
-    nome: {
+    descricao: {
         type: String,
         required: true,
         trim: true
     },
-    dataNascimento: {
+    preco: {
         type: String,
         required: true,
         trim: true
