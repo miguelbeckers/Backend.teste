@@ -6,13 +6,11 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     nome: {
         type: String,
-        required: true,
-        trim: true
+        required: true
     },
     dataNascimento: {
         type: Date,
-        required: true,
-        trim: true
+        required: true
     }
 });
 
