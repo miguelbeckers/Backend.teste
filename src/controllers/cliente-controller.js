@@ -3,46 +3,71 @@
 const mongoose = require('mongoose');
 const Cliente = mongoose.model('cliente');
 
-exports.get = (req, res, next) => {
-    Cliente
-        .find({})
-        .then(data => {
-            res.status(200).send(data);
-        })
-        .catch(e => {
-            console.log(e);
-            res.status(400).send(e);
+const ValidationContract = require('../validators/fluent-validator');
+const repository = require('../repositories/cliente-repository');
+
+exports.get = async(req, res, next) => {
+    try{
+        var data = await repository.get();
+        res.status(200).send(data);
+    }
+    catch (e){
+        res.status(500).send({
+            message: 'Falha ao processar a requisição', e
         });
+    }
 };
 
-exports.post = (req, res, next) => {
-    let cliente = new Cliente(req.body);
-    cliente
-        .save()
-        .then(x => {
-            res.status(201).send({ message: 'Cliente cadastrado com sucesso!' });
-        })
-        .catch(e => {
-            res.status(400).send({ message: 'Falha ao cadastrar o cliente', data: e });
+exports.post = async(req, res, next) => {
+    let contract =  new ValidationContract();
+    contract.hasMinLen(req.body.nome, 3, 'O nome deve conter pelo menos 3 caracteres');
+    contract.hasMinLen(req.body.dataNascimento, 1, 'A data de nascimento nao pode estar vazia');
+
+    if(!contract.isValid()){
+        res.status(400).send(contract.errors()).end();
+        return;
+    }
+
+    try{       
+        await repository.create({
+            nome: req.body.nome,
+            dataNascimento: req.body.dataNascimento
         });
+        res.status(201).send({
+            message: 'Cliente cadastrado com sucesso!'
+        });
+    }
+    catch (e){
+        res.status(500).send({
+            message: 'Falha ao processar a requisição', e
+        });
+    }
 };
 
-exports.put = (req, res, next) => {
-    Cliente
-        .findByIdAndUpdate(req.params.id, {
-            $set: {
-                nome: req.body.nome,
-                dataNascimento: req.body.dataNascimento
-            }
-        })
-        .then(data => {
-            res.status(200).send({ message: 'Cliente atualizado com sucesso!' });
-        })
-        .catch(e => {
-            res.status(400).send({ message: 'Falha ao atualizar o cliente', data: e });
+exports.put = async(req, res, next) => {
+    try{
+        await repository.update(req.query.id, req.body);
+        res.status(200).send({
+            message: 'Cliente atualizado com sucesso!'
+        }); 
+    }
+    catch (e){
+        res.status(500).send({
+            message: 'Falha ao processar a requisição', e
         });
+    } 
 };
 
-exports.delete = (req, res, next) => {
-    res.status(200).send(req.body);
+exports.delete = async(req, res, next) => {
+    try{
+        await repository.delete(req.query.id);
+        res.status(200).send({
+            message: 'Cliente removido com sucesso!'
+        });
+    }
+    catch (e){
+        res.status(500).send({
+            message: 'Falha ao processar a requisição'
+        });
+    }
 };

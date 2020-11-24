@@ -45,7 +45,7 @@ exports.put = async(req, res, next) => {
     try{
         await repository.update(req.query.id, req.body);
         res.status(200).send({
-            message: 'produto atualizado com sucesso!'
+            message: 'Produto atualizado com sucesso!'
         }); 
     }
     catch (e){
