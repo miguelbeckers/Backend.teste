@@ -37,8 +37,7 @@ exports.post = async(req, res, next) => {
             .status(201)
             .send({
                 message: 'Cliente cadastrado com sucesso!',
-                retorno: data,
-                teste: 'isto é um teste'
+                retorno: data
             })
     }
     catch (e){
@@ -50,14 +49,15 @@ exports.post = async(req, res, next) => {
 
 exports.put = async(req, res, next) => {
     try{
-        await repository.update(req.params.id, req.body);
+        var data = await repository.update(req.body);
         res.status(200).send({
-            message: 'Cliente atualizado com sucesso!'
+            message: 'Cliente atualizado com sucesso!',
+            retorno: data
         }); 
     }
     catch (e){
-        res.status(500).send({
-            message: 'Falha ao processar a requisição', e
+        res.status(401).send({
+            message: 'Id não foi informado'
         });
     } 
 };

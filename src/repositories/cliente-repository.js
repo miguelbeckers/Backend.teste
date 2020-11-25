@@ -14,14 +14,15 @@ exports.create = async(data) => {
     return cliente;
 }
 
-exports.update = async(id, data) => {
+exports.update = async(data) => {
     await Cliente
-        .findByIdAndUpdate(id, {
+        .useFindAndModify(data.id, {
             $set: {
                 nome: data.nome,
                 dataNascimento: data.dataNascimento
             }
         });
+    return Cliente
 }
 
 exports.delete = async(id) => {

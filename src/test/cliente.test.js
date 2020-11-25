@@ -29,6 +29,7 @@ let idCliente = [];
 describe('Cliente', () => {
 
   describe('Criar', () => {
+    
     it('Nome Cliente é obrigatório', (done) => {
 
       var result = chai
@@ -46,7 +47,8 @@ describe('Cliente', () => {
           done();
         }).catch(done);
 
-    })
+    });
+    
     it('Cliente B criado com sucesso', (done) => {
 
       var result = chai
@@ -69,7 +71,8 @@ describe('Cliente', () => {
           idCliente.push(res.body.retorno._id);
           done();
         }).catch(done);
-    })
+    });
+    
     it('Cliente C criado com sucesso', (done) => {
 
       var result = chai
@@ -91,11 +94,12 @@ describe('Cliente', () => {
           expect(res.body.retorno.dataCadastro).to.not.eql('');
           idCliente.push(res.body.retorno._id);
           done();
-        }).catch(done)
-    })
+        }).catch(done);
+    });
   });
     
   describe('Alterar', () => {
+    
     it('Id não foi informado para alteração', (done) => {
 
       var result = chai
@@ -112,7 +116,8 @@ describe('Cliente', () => {
             .eql('Id não foi informado');
           done();
         }).catch(done);
-    })
+    });
+
     it('Cliente B alterado com sucesso', (done) => {
 
       let cliente = listaCliente[1];
@@ -135,10 +140,11 @@ describe('Cliente', () => {
           expect(res.body.retorno.dataAtualizacao).to.not.eql('');
           done();
         }).catch(done);
-    })
+    });
   });
 
   describe('Pesquisar', () => {  
+    
     it('Pesquisar todos', (done) => {
 
       var result = chai
@@ -152,7 +158,8 @@ describe('Cliente', () => {
         expect(res.body).to.have.lengthOf(2);
         done();
       }).catch(done);
-    })
+    });
+    
     it('Pesquisar por nome', (done) => {
 
       var result = chai
@@ -174,10 +181,12 @@ describe('Cliente', () => {
   });
 
   describe('Remover', () => {
+    
     it('remove clientes', async () => {
       for (let i in idCliente) {
         const res = await repository.delete(String(idCliente[i]))
-      }
-    })
-  })
+      };
+    });
+  });
+
 });
