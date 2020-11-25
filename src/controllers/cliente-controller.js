@@ -21,22 +21,32 @@ exports.post = async(req, res, next) => {
     contract.hasMinLen(req.body.dataNascimento, 1, 'A data de nascimento nao pode estar vazia');
 
     if(!contract.isValid()){
-        res.status(400).send(contract.errors()).end();
+        res.status(400).send(contract.errors()[0]).end();
         return;
     }
+
+    var dia = new Date();
 
     try{       
         await repository.create({
             nome: req.body.nome,
-            dataNascimento: req.body.dataNascimento
+            dataNascimento: req.body.dataNascimento,
+            dataCadastro: dia
         });
-        res.status(201).send({
-            message: 'Cliente cadastrado com sucesso!'
-        });
+        res
+            .status(201)
+            .send({
+                message: 'Cliente cadastrado com sucesso!'
+            })
+            .retorno({
+                nome: req.body.nome,
+                dataNascimento: req.body.dataNascimento,
+                dataCadastro: dia
+            });
     }
     catch (e){
         res.status(400).send({
-            message: 'Falha ao processar a requisição', e
+            message: 'Falha ao processar a requisição'
         });
     }
 };

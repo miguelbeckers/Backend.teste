@@ -11,6 +11,9 @@ const schema = new Schema({
     dataNascimento: {
         type: Date,
         required: true
+    },
+    dataCadastro: {
+        type: Date,
     }
 });
 
