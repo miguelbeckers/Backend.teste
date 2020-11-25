@@ -28,7 +28,7 @@ exports.post = async(req, res, next) => {
     var dia = new Date();
 
     try{       
-        await repository.create({
+        var data = await repository.create({
             nome: req.body.nome,
             dataNascimento: req.body.dataNascimento,
             dataCadastro: dia
@@ -36,13 +36,10 @@ exports.post = async(req, res, next) => {
         res
             .status(201)
             .send({
-                message: 'Cliente cadastrado com sucesso!'
+                message: 'Cliente cadastrado com sucesso!',
+                retorno: data,
+                teste: 'isto é um teste'
             })
-            .retorno({
-                nome: req.body.nome,
-                dataNascimento: req.body.dataNascimento,
-                dataCadastro: dia
-            });
     }
     catch (e){
         res.status(400).send({

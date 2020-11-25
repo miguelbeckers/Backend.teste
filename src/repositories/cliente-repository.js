@@ -11,6 +11,7 @@ exports.get = async() => {
 exports.create = async(data) => {
     var cliente = new Cliente(data);
     await cliente.save();
+    return cliente;
 }
 
 exports.update = async(id, data) => {
