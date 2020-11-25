@@ -17,7 +17,7 @@ exports.get = async(req, res, next) => {
 
 exports.post = async(req, res, next) => {
     let contract =  new ValidationContract();
-    contract.hasMinLen(req.body.nome, 3, 'O nome deve conter pelo menos 3 caracteres');
+    contract.hasMinLen(req.body.nome, 1, 'Nome Cliente é obrigatório');
     contract.hasMinLen(req.body.dataNascimento, 1, 'A data de nascimento nao pode estar vazia');
 
     if(!contract.isValid()){

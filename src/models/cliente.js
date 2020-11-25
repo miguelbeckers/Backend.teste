@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
     nome: {
         type: String,
-        required: true
+        required: (true, "Nome Cliente é obrigatório")
     },
     dataNascimento: {
         type: Date,

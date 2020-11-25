@@ -33,7 +33,7 @@ describe('Cliente', () => {
     it('Nome Cliente é obrigatório', (done) => {
 
       var result = chai.request(server)
-        .post('/'+baseUrl)
+        .post('/'+baseUrl) 
         .send(listaCliente[0])
 
       Promise.resolve(result).then((res) => {
@@ -43,6 +43,7 @@ describe('Cliente', () => {
         done()
       }).catch(done)
     })
+
 
     it('Cliente B criado com sucesso', (done) => {
 
