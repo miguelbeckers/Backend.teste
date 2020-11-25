@@ -62,7 +62,7 @@ exports.put = async(req, res, next) => {
 
 exports.delete = async(req, res, next) => {
     try{
-        await repository.delete(req.query.id);
+        await repository.delete(req.params.id);
         res.status(200).send({
             message: 'Pedido removido com sucesso!'
         });

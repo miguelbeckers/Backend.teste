@@ -6,12 +6,12 @@ const Pedido = mongoose.model('pedido');
 exports.get = async(data) => {
     var res = await Pedido.find({})
     return res;
-}
+};
 
 exports.create = async(data) => {
     var pedido = new Pedido(data);
     await pedido.save();
-}
+};
 
 exports.update = async(id, data) => {
     await Pedido
@@ -21,8 +21,8 @@ exports.update = async(id, data) => {
                 produtos: req.body.produtos
             }
         });
-}
+};
 
 exports.delete = async(id) => {
     await Pedido.findOneAndRemove(id);
-}
+};

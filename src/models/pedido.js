@@ -10,6 +10,9 @@ const schema = new Schema({
         required: true
     },
     produtos: [{
+        type: Object,
+        required: true,
+        
         produto: {
             type: mongoose.Schema.Types.ObjectID,
             ref: 'produto',

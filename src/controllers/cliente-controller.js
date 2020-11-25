@@ -1,8 +1,5 @@
 'use strict'
 
-const mongoose = require('mongoose');
-const Cliente = mongoose.model('cliente');
-
 const ValidationContract = require('../validators/fluent-validator');
 const repository = require('../repositories/cliente-repository');
 
@@ -67,7 +64,7 @@ exports.delete = async(req, res, next) => {
     }
     catch (e){
         res.status(500).send({
-            message: 'Falha ao processar a requisição'
+            message: 'Falha ao processar a requisição', e
         });
     }
 };
