@@ -35,7 +35,7 @@ exports.post = async(req, res, next) => {
         });
     }
     catch (e){
-        res.status(500).send({
+        res.status(400).send({
             message: 'Falha ao processar a requisição', e
         });
     }
