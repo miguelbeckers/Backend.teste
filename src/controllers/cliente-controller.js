@@ -42,7 +42,7 @@ exports.post = async(req, res, next) => {
     if(!contract.isValid()){
         res.status(400).send(contract.errors()[0]).end();
         return;
-    }
+    };
 
     var dia = new Date();
 
@@ -57,13 +57,13 @@ exports.post = async(req, res, next) => {
             .send({
                 message: 'Cliente cadastrado com sucesso!',
                 retorno: data
-            })
+            });
     }
     catch (e){
         res.status(400).send({
             message: 'Falha ao processar a requisição'
         });
-    }
+    };
 };
 
 exports.put = async(req, res, next) => {
@@ -87,7 +87,7 @@ exports.put = async(req, res, next) => {
         res.status(500).send({
             message: 'Falha na requisição'
         });
-    } 
+    };
 };
 
 exports.delete = async(req, res, next) => {
@@ -101,5 +101,5 @@ exports.delete = async(req, res, next) => {
         res.status(500).send({
             message: 'Falha ao processar a requisição', e
         });
-    }
+    };
 };

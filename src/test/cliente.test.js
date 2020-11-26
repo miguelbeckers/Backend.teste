@@ -47,7 +47,6 @@ describe('Cliente', () => {
           done();
         })
         .catch(done);
-
     });
     
     it('Cliente B criado com sucesso', (done) => {

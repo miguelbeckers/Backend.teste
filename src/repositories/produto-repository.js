@@ -8,19 +8,29 @@ exports.get = async() => {
     return res;
 };
 
+exports.getByDescricao = async(descricao) => {
+    const res = await Produto
+        .findOne({
+            descricao: descricao
+        });
+    return res;
+}
+
 exports.create = async(data) => {
     var produto = new Produto(data);
     await produto.save();
+    return produto;
 };
 
-exports.update = async(id, data) => {
-    await Produto
-        .findByIdAndUpdate(id, {
+exports.update = async(data) => {
+    var res = await Produto
+        .findByIdAndUpdate(data._id, {
             $set: {
                 descricao: data.descricao,
                 preco: data.preco
             }
-        });
+        }, { new: true });
+    return res;
 };
 
 exports.delete = async(id) => {

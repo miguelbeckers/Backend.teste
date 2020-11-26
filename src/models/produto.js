@@ -10,9 +10,12 @@ const schema = new Schema({
         trim: true
     },
     preco: {
-        type: String,
+        type: Number,
         required: true,
         trim: true
+    },
+    dataCadastro: {
+        type: Date
     }
 });
 

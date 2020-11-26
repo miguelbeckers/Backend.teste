@@ -15,24 +15,17 @@ exports.get = async(req, res, next) => {
     }
 };
 
-exports.post = async(req, res, next) => {
-    let contract =  new ValidationContract();
-    contract.hasMinLen(req.body.descricao, 3, 'A descricao deve conter pelo menos 3 caracteres');
-    contract.isRequired(req.body.preco, 'O preço é obrigatorio');
-
-    if(!contract.isValid()){
-        res.status(400).send(contract.errors()).end();
-        return;
-    }
-
-    try{       
-        await repository.create({
-            descricao: req.body.descricao,
-            preco: req.body.preco
-        });
-        res.status(201).send({
-            message: 'Produto cadastrado com sucesso!'
-        });
+exports.getByDescricao = async(req, res, next) => {
+    try{
+        if(!req.query.descricao){
+            res.status(401).send({
+                message: 'Descrição não informada'
+            });
+            return;
+        }
+        
+        var data = await repository.getByDescricao(req.query.descricao);
+        res.status(200).send(data);
     }
     catch (e){
         res.status(500).send({
@@ -41,12 +34,54 @@ exports.post = async(req, res, next) => {
     }
 };
 
+exports.post = async(req, res, next) => {
+    let contract =  new ValidationContract();
+    contract.isRequired(req.body.descricao, 'Descrição Produto é obrigatório');
+    contract.isRequired(req.body.preco, 'O preço é obrigatorio');
+
+    if(!contract.isValid()){
+        res.status(400).send(contract.errors()[0]).end();
+        return;
+    };
+
+    var dia = new Date();
+
+    try{       
+        var data = await repository.create({
+            descricao: req.body.descricao,
+            preco: req.body.preco,
+            dataCadastro: dia
+        });
+        res
+            .status(201)
+            .send({
+                message: 'Produto cadastrado com sucesso!',
+                retorno: data
+            });
+    }
+    catch (e){
+        res.status(500).send({
+            message: 'Falha ao processar a requisição', e
+        });
+    };
+};
+
 exports.put = async(req, res, next) => {
     try{
-        await repository.update(req.params.id, req.body);
-        res.status(200).send({
-            message: 'Produto atualizado com sucesso!'
-        }); 
+        if(!req.body._id){
+            res.status(401).send({
+                message: 'Id não foi informado'
+            });
+            return;
+        }
+        
+        var data = await repository.update(req.body);
+        res
+            .status(200)
+            .send({
+                message: 'Produto atualizado com sucesso!',
+                retorno: data
+            });
     }
     catch (e){
         res.status(500).send({
