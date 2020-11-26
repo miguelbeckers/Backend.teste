@@ -8,6 +8,14 @@ exports.get = async() => {
     return res;
 }
 
+exports.getByName = async(nome) => {
+    const res = await Cliente
+        .findOne({
+            nome: nome
+        });
+    return res;
+}
+
 exports.create = async(data) => {
     var cliente = new Cliente(data);
     await cliente.save();
@@ -15,14 +23,14 @@ exports.create = async(data) => {
 }
 
 exports.update = async(data) => {
-    await Cliente
-        .useFindAndModify(data.id, {
+    var res = await Cliente
+        .findByIdAndUpdate(data._id,{
             $set: {
                 nome: data.nome,
                 dataNascimento: data.dataNascimento
             }
-        });
-    return Cliente
+        }, { new: true });
+    return res;
 }
 
 exports.delete = async(id) => {

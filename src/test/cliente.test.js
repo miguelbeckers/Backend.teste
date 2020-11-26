@@ -45,7 +45,8 @@ describe('Cliente', () => {
             .property('message')
             .eql('Nome Cliente é obrigatório');
           done();
-        }).catch(done);
+        })
+        .catch(done);
 
     });
     
@@ -70,7 +71,8 @@ describe('Cliente', () => {
           expect(res.body.retorno.dataCadastro).to.not.eql('');
           idCliente.push(res.body.retorno._id);
           done();
-        }).catch(done);
+        })
+        .catch(done);
     });
     
     it('Cliente C criado com sucesso', (done) => {
@@ -94,7 +96,8 @@ describe('Cliente', () => {
           expect(res.body.retorno.dataCadastro).to.not.eql('');
           idCliente.push(res.body.retorno._id);
           done();
-        }).catch(done);
+        })
+        .catch(done);
     });
   });
     
@@ -115,7 +118,8 @@ describe('Cliente', () => {
             .property('message')
             .eql('Id não foi informado');
           done();
-        }).catch(done);
+        })
+        .catch(done);
     });
 
     it('Cliente B alterado com sucesso', (done) => {
@@ -139,7 +143,8 @@ describe('Cliente', () => {
             .eql('nome alterado');
           expect(res.body.retorno.dataAtualizacao).to.not.eql('');
           done();
-        }).catch(done);
+        })
+        .catch(done);
     });
   });
 
@@ -152,12 +157,15 @@ describe('Cliente', () => {
         .get('/' + baseUrl + '/getAll')
         .send();
   
-      Promise.resolve(result).then((res) => {
-        res.should.have.status(200);
-        res.body.should.be.a('array');
-        expect(res.body).to.have.lengthOf(2);
-        done();
-      }).catch(done);
+      Promise
+        .resolve(result)
+        .then((res) => {
+          res.should.have.status(200);
+          res.body.should.be.a('array');
+          expect(res.body).to.have.lengthOf(2);
+          done();
+        })
+        .catch(done);
     });
     
     it('Pesquisar por nome', (done) => {
@@ -169,14 +177,17 @@ describe('Cliente', () => {
           nome: 'nome alterado'
         });
 
-      Promise.resolve(result).then((res) => {
-        res.should.have.status(200)
-        res.body.should.have
-          .property('nome')
-          .eql('nome alterado');
-        res.body.should.be.a('object');
-        done();
-      }).catch(done)
+      Promise
+        .resolve(result)
+        .then((res) => {
+          res.should.have.status(200)
+          res.body.should.have
+            .property('nome')
+            .eql('nome alterado');
+          res.body.should.be.a('object');
+          done();
+        })
+        .catch(done);
     })
   });
 
