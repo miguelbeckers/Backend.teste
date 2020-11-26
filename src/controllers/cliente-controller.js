@@ -36,8 +36,8 @@ exports.getByName = async(req, res, next) => {
 
 exports.post = async(req, res, next) => {
     let contract =  new ValidationContract();
-    contract.hasMinLen(req.body.nome, 1, 'Nome Cliente é obrigatório');
-    contract.hasMinLen(req.body.dataNascimento, 1, 'A data de nascimento nao pode estar vazia');
+    contract.isRequired(req.body.nome, 'Nome Cliente é obrigatório');
+    contract.isRequired(req.body.dataNascimento, 'A data de nascimento nao pode estar vazia');
 
     if(!contract.isValid()){
         res.status(400).send(contract.errors()[0]).end();
@@ -76,9 +76,7 @@ exports.put = async(req, res, next) => {
         }
         
         var data = await repository.update(req.body);
-        res
-            .status(200)
-            .send({
+        res.status(200).send({
                 message: 'Cliente atualizado com sucesso!',
                 retorno: data
             }); 

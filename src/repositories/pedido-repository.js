@@ -11,16 +11,19 @@ exports.get = async(data) => {
 exports.create = async(data) => {
     var pedido = new Pedido(data);
     await pedido.save();
+    return pedido;
 };
 
-exports.update = async(id, data) => {
-    await Pedido
-        .findByIdAndUpdate(id, {
+exports.update = async(data) => {
+
+    var res = await Pedido
+        .findByIdAndUpdate(data._id, {
             $set: {
-                cliente: req.body.cliente,
-                produtos: req.body.produtos
+                cliente: data.cliente,
+                produtos: data.produtos
             }
-        });
+        }, { new: true });
+    return res;
 };
 
 exports.delete = async(id) => {

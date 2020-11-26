@@ -6,12 +6,17 @@ const repository = require('../repositories/pedido-repository');
 exports.get = async(req, res, next) => {
     try{
         var data = await repository.get();
-        res.status(200).send(data);
+        res
+            .status(200)
+            .send({
+                message: 'Sucesso',
+                lista: data
+            });
     }
     catch (e){
-        res.status(500).send({
-            message: 'Falha ao processar a requisição', e
-        });
+        res
+            .status(500)
+            .send({ message: 'Falha ao processar a requisição', e});
     }
 };
 
@@ -19,24 +24,25 @@ exports.post = async(req, res, next) => {
     
     let contract =  new ValidationContract();
     
-    contract.isRequired(req.body.cliente, 'O cliente é obrigatorio');
-    contract.isRequired(req.body.produtos, 'É obrigatorio ter um produto');
+    contract.isRequired(req.body.cliente, 'Cliente é obrigatório');
+    contract.isRequired(req.body.produtos, 'Produto é obrigatório');
 
     if(!contract.isValid()){
-        res.status(400).send(contract.errors()).end();
+        res.status(401).send(contract.errors()[0]).end();
         return;
     }
     
     var dia = new Date();
 
     try{       
-        await repository.create({
+        var data = await repository.create({
             cliente: req.body.cliente,
             produtos: req.body.produtos,
-            dataCadastro: dia.getDate()
+            dataCadastro: dia
         });
         res.status(201).send({
-            message: 'Pedido cadastrado com sucesso!'
+            message: 'Pedido cadastrado com sucesso!',
+            retorno: data
         });
     }
     catch (e){
@@ -48,10 +54,18 @@ exports.post = async(req, res, next) => {
 
 exports.put = async(req, res, next) => {
     try{
-        await repository.update(req.query.id, req.body);
+        if(!req.body._id){
+            res.status(401).send({
+                message: 'Id não foi informado'
+            });
+            return;
+        }
+        
+        var data = await repository.update(req.body);
         res.status(200).send({
-            message: 'Pedido atualizado com sucesso!'
-        }); 
+            message: 'Pedido atualizado com sucesso!',
+            retorno: data
+        });
     }
     catch (e){
         res.status(500).send({
